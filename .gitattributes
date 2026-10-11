@@ -1,0 +1,2 @@
+# Keep Linux line endings for scripts, even when edited on Windows (sbatch rejects CRLF)
+*.sh text eol=lf
