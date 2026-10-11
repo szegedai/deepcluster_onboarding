@@ -47,7 +47,7 @@ The login node is not where your code will run, so test inside a job:
 
 ```bash
 cd ~
-sbatch --account=<your_account> onboarding/gpu_check.sh dl
+sbatch --account=<your_account> cluster-onboarding/gpu_check.sh dl
 cat gpu_check-<jobid>.out
 ```
 

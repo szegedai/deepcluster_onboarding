@@ -11,7 +11,7 @@ The `#SBATCH` lines are read by Slurm and must come before the first command in 
 
 ```bash
 mkdir -p ~/projects/myproject && cd ~/projects/myproject
-cp ~/onboarding/job_template.sh train.sh
+cp ~/cluster-onboarding/job_template.sh train.sh
 nano train.sh
 sbatch train.sh
 ```

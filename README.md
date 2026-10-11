@@ -15,7 +15,7 @@ Your account was created from the access request form you filled in.
 | How you log in | with the SSH key you pasted into the form (`~/.ssh/id_ed25519`). No password needed for deep21 |
 | Home directory | `/shared/<username>` (also called `~` or `$HOME`) |
 | Slurm account(s) | one for each course you ticked (see the table below) |
-| GPU budget | **20 GPU-hours per course** you are enrolled in (see [step 6](#step-6--resources-and-your-gpu-budget)) |
+| GPU budget | **20 GPU-hours per course** you are enrolled in (see [step 7](#step-7--resources-and-your-gpu-budget)) |
 
 | Course | Slurm account |
 |---|---|
@@ -66,13 +66,30 @@ Then run `ssh deep21`. The first time, type `yes` when asked to trust a host, an
 
 👉 The full guide covers Windows details, VS Code, how to stop typing the kabinet password, copying files and troubleshooting: **[guides/connect.md](guides/connect.md)**
 
-## Step 2 — Hello cluster (~5 min)
+## Step 2 — Get the onboarding files (~2 min)
+
+The scripts used in the next steps are in this repository. Clone it into your home directory on deep21.
+Get the HTTPS address from the green **Code** button at the top of the repository page, then run:
+
+```bash
+cd ~
+git clone <repository-address> ~/cluster-onboarding
+ls ~/cluster-onboarding          # README.md, guides/, hello_cluster.sh, gpu_check.sh, job_template.sh, ...
+```
+
+The rest of this guide expects the files in `~/cluster-onboarding`, so keep that folder name.
+When we update the material, get the latest version with `cd ~/cluster-onboarding && git pull`.
+Don't edit files inside this folder, because local changes can make `git pull` fail. Copy them to your own project folder first, as step 5 shows.
+
+✅ `ls ~/cluster-onboarding` lists the files above.
+
+## Step 3 — Hello cluster (~5 min)
 
 Your first job asks for one GPU for two minutes and prints where it ran:
 
 ```bash
 cd ~
-sbatch --account=<your_account> onboarding/hello_cluster.sh
+sbatch --account=<your_account> cluster-onboarding/hello_cluster.sh
 #   -> Submitted batch job 12345
 squeue --me                      # shows your job while it is pending (PD) or running (R)
 cat hello_cluster-12345.out      # once it has finished (use your own job ID)
@@ -85,7 +102,7 @@ cat hello_cluster-12345.out      # once it has finished (use your own job ID)
 If the job disappears from `squeue` and there is no output file, check what happened with:
 `sacct -j 12345 --format=JobID,State,ExitCode`
 
-## Step 3 — Create your Python environment (~10 min)
+## Step 4 — Create your Python environment (~10 min)
 
 Do this on deep21:
 
@@ -102,18 +119,18 @@ Then check that the environment can see a GPU. This runs a short test job:
 
 ```bash
 cd ~
-sbatch --account=<your_account> onboarding/gpu_check.sh dl     # last argument = your environment name
+sbatch --account=<your_account> cluster-onboarding/gpu_check.sh dl     # last argument = your environment name
 ```
 
 ✅ `gpu_check-<jobid>.out` contains `CUDA available: True` and `Matrix multiply on GPU: OK`.
 
 👉 More on managing environments and packages: **[guides/environment.md](guides/environment.md)**
 
-## Step 4 — Run your own job
+## Step 5 — Run your own job
 
 ```bash
 mkdir -p ~/projects/myproject && cd ~/projects/myproject
-cp ~/onboarding/job_template.sh .
+cp ~/cluster-onboarding/job_template.sh .
 nano job_template.sh          # edit the lines marked EDIT: account, environment, command, resources
 sbatch job_template.sh
 ```
@@ -125,7 +142,7 @@ sbatch job_template.sh
 
 👉 The available GPUs, choosing resources, monitoring jobs, interactive sessions and job arrays: **[guides/jobs.md](guides/jobs.md)**
 
-## Step 5 — Where your files live
+## Step 6 — Where your files live
 
 * Your home directory `/shared/<username>` holds your code, data and results. Your conda environments are kept under `/shared/anaconda/<username>/`.
 * Storage is on redundant disks (RAID5), but **there is no backup**. Keep your code in Git/GitHub and copy important results to your own computer.
@@ -135,7 +152,7 @@ sbatch job_template.sh
 * Copy files to or from your computer (run this **on your computer**): `scp deep21:~/projects/myproject/results.csv .`
   You can also drag and drop files in VS Code.
 
-## Step 6 — Resources and your GPU budget
+## Step 7 — Resources and your GPU budget
 
 * You have **20 GPU-hours per course**. GPU-hours = number of GPUs × how long the job actually runs.
   This is counted whether or not your code uses the GPU, so an idle interactive session still uses up your budget.
@@ -144,7 +161,7 @@ sbatch job_template.sh
   A job with no `--time`, or a `--time` longer than your remaining hours, **waits in the queue forever**.
 * Limits per job and per person: at most **24 h** per job, **2 jobs running** at the same time and **8 CPU cores** across your running jobs.
   These count all your courses together. Only the 20 h budget is separate for each course.
-* See how much you have used: `bash ~/onboarding/my_gpu_usage.sh`
+* See how much you have used: `bash ~/cluster-onboarding/my_gpu_usage.sh`
 * Ask for what you need: usually **1 GPU**, **4 CPUs**, **6 GB RAM** and a realistic `--time`. Smaller requests start sooner.
 * Test with a short run (a few minutes, a small part of the data) before starting a long one.
 
@@ -163,7 +180,7 @@ sbatch job_template.sh
 | `tail -f <name>-<jobid>.out` | follow a running job's output (Ctrl+C stops following, not the job) |
 | `sinfo` | nodes and whether they are busy |
 | `srun --account=<your_account> --gres=gpu:1 --time=00:30:00 --pty bash` | interactive shell on a GPU node (type `exit` when done) |
-| `bash ~/onboarding/my_gpu_usage.sh` | GPU-hours you have used |
+| `bash ~/cluster-onboarding/my_gpu_usage.sh` | GPU-hours you have used |
 
 ## Rules
 

@@ -43,8 +43,8 @@ job starts only if   --time × GPUs  ≤  GPU budget you have left
 ## Check your usage
 
 ```bash
-bash ~/onboarding/my_gpu_usage.sh                 # GPU-hours used, per account, since the start of term
-bash ~/onboarding/my_gpu_usage.sh 2026-10-01      # ...or since a date you choose
+bash ~/cluster-onboarding/my_gpu_usage.sh                 # GPU-hours used, per account, since the start of term
+bash ~/cluster-onboarding/my_gpu_usage.sh 2026-10-01      # ...or since a date you choose
 
 # Slurm's own view of your limit and usage: GrpTRESMins=gres/gpu=<limit>(<used>), in minutes
 scontrol show assoc_mgr users=$USER flags=assoc | grep -o 'GrpTRESMins=[^ ]*'

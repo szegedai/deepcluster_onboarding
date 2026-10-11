@@ -9,12 +9,12 @@
 
 # Checks that your conda environment can use the GPU.
 # Usage (from your home directory):
-#   sbatch --account=<your_account> onboarding/gpu_check.sh <conda_env_name>
+#   sbatch --account=<your_account> cluster-onboarding/gpu_check.sh <conda_env_name>
 
 ENV_NAME="${1:-}"
 if [ -z "$ENV_NAME" ]; then
     echo "ERROR: give your conda environment name, e.g.:"
-    echo "  sbatch --account=<your_account> onboarding/gpu_check.sh dl"
+    echo "  sbatch --account=<your_account> cluster-onboarding/gpu_check.sh dl"
     exit 1
 fi
 

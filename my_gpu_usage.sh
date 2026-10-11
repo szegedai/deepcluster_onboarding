@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 # Shows how many GPU-hours you have used, per course account.
-# Usage:  bash ~/onboarding/my_gpu_usage.sh [START_DATE]     e.g. 2026-10-01 (default: start of term)
+# Usage:  bash ~/cluster-onboarding/my_gpu_usage.sh [START_DATE]     e.g. 2026-10-01 (default: start of term)
 #
 # GPU-hours = GPUs allocated x time the job actually ran (running jobs count up to now).
 

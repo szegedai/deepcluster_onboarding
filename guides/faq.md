@@ -3,6 +3,13 @@
 ### Connecting
 See the troubleshooting table in [connect.md](connect.md#troubleshooting).
 
+### `git clone` asks for a username and password, or says `Repository not found`
+Check that you copied the **HTTPS** address from the green **Code** button of the repository (it starts with `https://` and ends with `.git`).
+If it still asks, contact us (see the end of this page).
+
+### `git pull` fails with `Your local changes ... would be overwritten`
+You edited a file inside `~/cluster-onboarding`. Copy your changed file somewhere else, then run `git checkout -- <file>` and `git pull` again.
+
 ### `sbatch: error: Batch job submission failed: Invalid account or account/partition combination specified`
 The account name is wrong, or you're not a member of that course account. Check the spelling against the
 [README table](../README.md#what-you-already-have) and list your accounts with `sacctmgr show assoc user=$USER format=Account%20`.
@@ -14,7 +21,7 @@ In VS Code you can also click `CRLF` in the bottom-right corner and switch it to
 ### My job disappeared from `squeue` and there is no output file
 * Check what happened: `sacct -j <jobid> --format=JobID,State,ExitCode`
 * Does the folder in `--output` exist? Slurm doesn't create folders.
-* Did you submit from a folder you can write to? `~/onboarding` may not be writable, so submit from `~` or your project folder.
+* Did you submit from a folder you can write to? Submit from `~` or your project folder.
 
 ### `print()` output appears only at the end, or not at all
 Python buffers its output. Add `export PYTHONUNBUFFERED=1` to the script (the template has it), or run `python -u script.py`.

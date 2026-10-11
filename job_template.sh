@@ -3,7 +3,7 @@
 # Copy it into your project folder, edit the lines marked EDIT, then submit with:
 #   sbatch job_template.sh
 # Lines starting with #SBATCH are read by Slurm. Keep them above the first command.
-# More details: ~/onboarding/guides/jobs.md
+# More details: ~/cluster-onboarding/guides/jobs.md
 
 # EDIT: a short name (shown in squeue and used in the log file name)
 #SBATCH --job-name=my-job
